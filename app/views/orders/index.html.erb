@@ -1,0 +1,31 @@
+<h1>Listing orders</h1>
+
+<table>
+  <tr>
+    <th>Number</th>
+    <th>Shipping</th>
+    <th>Date</th>
+    <th>Count</th>
+    <th>Field</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @orders.each do |order| %>
+  <tr>
+    <td><%= order.number %></td>
+    <td><%= order.shipping %></td>
+    <td><%= order.date %></td>
+    <td><%= order.count %></td>
+    <td><%= order.field %></td>
+    <td><%= link_to 'Show', order %></td>
+    <td><%= link_to 'Edit', edit_order_path(order) %></td>
+    <td><%= link_to 'Destroy', order, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Order', new_order_path %>
