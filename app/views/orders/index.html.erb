@@ -1,4 +1,40 @@
 <h1>Listing orders</h1>
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "orders_chart"
+      },
+      title: {
+        text: "Orders by Day"
+      },
+      xAxis: {
+        type: "datetime"
+      },
+      yAxis: {
+        title: {
+          text: "Dollars"
+        }
+      },
+      tooltip: {
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' +
+            "$" + Highcharts.numberFormat(this.y, 2);
+        }
+      },
+      series: [{
+	
+	  pointInterval: <%= 1.day * 1000 %>,
+	  pointStart: <%= 3.weeks.ago.to_i * 1000 %>,
+	  data:  <%= (3.weeks.ago.to_date..Date.today).map {|date| Order.total_on(date).to_f
+	  }.inspect  %>
+	  
+	  
+	  }]
+    });
+  });
+</script>
+<div id="orders_chart" style="width:560px; height:300px;"></div>
 
 <table>
   <tr>
@@ -16,7 +52,7 @@
   <tr>
     <td><%= order.item %></td>
     <td><%= order.description %></td>
-    <td><%= order.amount %></td>
+    <td><%=  number_to_currency(order.amount) %></td>
     <td><%= order.quantity %></td>
     <td><%= order.date %></td>
     <td><%= link_to 'Show', order %></td>
