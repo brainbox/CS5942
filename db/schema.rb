@@ -10,14 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110623154832) do
+ActiveRecord::Schema.define(:version => 20110624114601) do
 
   create_table "orders", :force => true do |t|
-    t.integer  "number"
-    t.float    "shipping"
+    t.string   "item"
+    t.string   "description"
+    t.float    "amount"
+    t.integer  "quantity"
     t.date     "date"
-    t.string   "count"
-    t.string   "field"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -12,24 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :number %><br />
-    <%= f.text_field :number %>
+    <%= f.label :item %><br />
+    <%= f.text_field :item %>
   </div>
   <div class="field">
-    <%= f.label :shipping %><br />
-    <%= f.text_field :shipping %>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
   </div>
   <div class="field">
     <%= f.label :date %><br />
     <%= f.date_select :date %>
-  </div>
-  <div class="field">
-    <%= f.label :count %><br />
-    <%= f.text_field :count %>
-  </div>
-  <div class="field">
-    <%= f.label :field %><br />
-    <%= f.text_field :field %>
   </div>
   <div class="actions">
     <%= f.submit %>
