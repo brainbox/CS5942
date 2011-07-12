@@ -1,14 +1,30 @@
 class LanguagesController < ApplicationController
   # GET /languages
   # GET /languages.xml
-  def index
-    @languages = Language.all
+   def index
+    if params[:first] && params[:last]
+      @languages = Language.all
+      @first = Time.parse(params[:first])
+      @last = Time.parse(params[:last])
+      
+      if @first == @last
+	# no date range....fLASH ERROR MESSAGE
+      elsif @first > @last
+	# fisr is after last
+      end
+      
+      @series = {}
+      @languages.each do |language|
+	@series[language.lang_name] = (@first.to_date..@last.to_date).map {|date| language.letters.lang_total_on(language.id, date)}.inspect
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @languages }
     end
   end
+
 
   # GET /languages/1
   # GET /languages/1.xml

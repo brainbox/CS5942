@@ -1,39 +1,82 @@
-<h1>Listing languages</h1>
+<h1>Graph </h1>
 
-<table>
-  <tr>
-    <th>Lang code</th>
-    <th>Lang name</th>
-    <th>Short code</th>
-    <th>I18n identifier</th>
-    <th>Custom css</th>
-    <th>Active</th>
-    <th>In menus</th>
-    <th>Default domain</th>
-    <th>Root slug</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @languages.each do |language| %>
-  <tr>
-    <td><%= language.lang_code %></td>
-    <td><%= language.lang_name %></td>
-    <td><%= language.short_code %></td>
-    <td><%= language.i18n_identifier %></td>
-    <td><%= language.custom_css %></td>
-    <td><%= language.active %></td>
-    <td><%= language.in_menus %></td>
-    <td><%= language.default_domain_id %></td>
-    <td><%= language.root_slug %></td>
-    <td><%= link_to 'Show', language %></td>
-    <td><%= link_to 'Edit', edit_language_path(language) %></td>
-    <td><%= link_to 'Destroy', language, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+
+
+
+<%= form_tag languages_path,  :method => 'get' do %>
+<p>
+	Start Date:<input class="picker" name="first" type="text" /></p></br></br>
+	<p>End Date: <input class="picker" name="last" type="text" /></br>
+	
+	<%= submit_tag "Submit", :name => nil %>
+</p>
 <% end %>
-</table>
+
+<% if @first -%>
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "language_chart",
+	defaultSeriesType: 'column',
+	zoomType: 'x',
+        spacingRight: 20
+      },
+      title: {
+        text: "Letters per day"
+      },
+      xAxis: {  
+        type: "datetime",
+	 maxZoom: 14 * 24 * 3600000, // fourteen days
+        labels: {
+	  rotation: -45,
+          align: 'right',
+          formatter: function() {
+           return Highcharts.dateFormat("%b %e, %Y", this.value-1);
+          }
+        }
+	
+      },
+      yAxis: {
+        title: {
+          text: "Number of Letters"
+        }
+      },
+   
+      tooltip: {
+      
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
+                 Highcharts.numberFormat(this.y, 0) + ' letters' + '<br/> Language: ' + this.series.name ;
+        }
+	
+      },
+      
+     series: [
+      <%- @series.each_key do |key| %>
+      {
+          name: '<%= key %>',
+          pointInterval: <%= 1.day * 1000 %>,
+          pointStart: <%= (@first + 1.day).to_i * 1000 %>,
+          pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
+          data: <%= @series[key] %>
+         },
+       <%- end %>
+       ],
+    });
+  });
+</script>
+<% end -%>
+<div id="language_chart" style="width:1200px; height: 600px;"></div>
+<br />
+<br />
+
+
+
+
 
 <br />
 
 <%= link_to 'New Language', new_language_path %>
+
