@@ -1,4 +1,12 @@
 CS5942::Application.routes.draw do
+  resources :supporters
+
+  resources :languages
+
+  resources :letter_campaigns
+
+  resources :letters
+
   resources :orders
 
   # The priority is based upon order of creation:

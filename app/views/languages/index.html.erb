@@ -1,0 +1,39 @@
+<h1>Listing languages</h1>
+
+<table>
+  <tr>
+    <th>Lang code</th>
+    <th>Lang name</th>
+    <th>Short code</th>
+    <th>I18n identifier</th>
+    <th>Custom css</th>
+    <th>Active</th>
+    <th>In menus</th>
+    <th>Default domain</th>
+    <th>Root slug</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @languages.each do |language| %>
+  <tr>
+    <td><%= language.lang_code %></td>
+    <td><%= language.lang_name %></td>
+    <td><%= language.short_code %></td>
+    <td><%= language.i18n_identifier %></td>
+    <td><%= language.custom_css %></td>
+    <td><%= language.active %></td>
+    <td><%= language.in_menus %></td>
+    <td><%= language.default_domain_id %></td>
+    <td><%= language.root_slug %></td>
+    <td><%= link_to 'Show', language %></td>
+    <td><%= link_to 'Edit', edit_language_path(language) %></td>
+    <td><%= link_to 'Destroy', language, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Language', new_language_path %>
