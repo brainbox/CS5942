@@ -1,4 +1,4 @@
-<h1>Graph </h1>
+<h1>Graph For Letters </h1>
 
 
 
@@ -6,10 +6,10 @@
 
 <%= form_tag languages_path,  :method => 'get' do %>
 <p>
-	Start Date:<input class="picker" name="first" type="text" /></p></br></br>
-	<p>End Date: <input class="picker" name="last" type="text" /></br>
+	Start Date: <input class="picker" name="first" type="text" /></p></br></br>
+	<p>End Date: <input class="picker" name="last" type="text" /></br></br>
 	
-	<%= submit_tag "Submit", :name => nil %>
+	<%= submit_tag "Load Graph", :name => nil %>
 </p>
 <% end %>
 
@@ -80,3 +80,4 @@
 
 <%= link_to 'New Language', new_language_path %>
 
+<%= link_to 'Home Page', 'http://localhost:3000/' %>
