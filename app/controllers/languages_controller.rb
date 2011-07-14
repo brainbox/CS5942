@@ -9,13 +9,21 @@ class LanguagesController < ApplicationController
       
       if @first == @last
 	# no date range....fLASH ERROR MESSAGE
+	flash[:notice] = "You can not select the same date"
+	
       elsif @first > @last
 	# fisr is after last
+	
       end
       
       @series = {}
       @languages.each do |language|
-	@series[language.lang_name] = (@first.to_date..@last.to_date).map {|date| language.letters.lang_total_on(language.id, date)}.inspect
+	    series_data = Array.new
+	    (@first.to_i..@last.to_i).step(1.week).each do |date|
+		  date = Time.at(date)
+		  series_data.push language.letters.lang_total_on(language.id, date, (date + 1.week))
+		end
+        @series[language.lang_name] = series_data.inspect
       end
     end
 

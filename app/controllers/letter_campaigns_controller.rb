@@ -1,14 +1,40 @@
 class LetterCampaignsController < ApplicationController
   # GET /letter_campaigns
   # GET /letter_campaigns.xml
+  
   def index
-    @letter_campaigns = LetterCampaign.all
+    if params[:first] && params[:last]
+      @letter_campaigns = LetterCampaign.all
+      @first = Time.parse(params[:first])
+      @last = Time.parse(params[:last])
+      
+      if @first == @last
+	# no date range....fLASH ERROR MESSAGE
+	flash[:notice] = "You can not select the same date"
+	
+      elsif @first > @last
+	# fisr is after last
+	
+      end
+      
+      @series = {}
+      @letter_campaigns.each do |letter_campaign|
+	    series_data = Array.new
+	    (@first.to_i..@last.to_i).step(1.week).each do |date|
+		  date = Time.at(date)
+		  series_data.push letter_campaign.letters.tribe_total_on(letter_campaign.id, date, (date + 1.week))
+		end
+        @series[letter_campaign.name] = series_data.inspect
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @letter_campaigns }
     end
   end
+  
+  
 
   # GET /letter_campaigns/1
   # GET /letter_campaigns/1.xml

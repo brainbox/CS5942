@@ -2,8 +2,6 @@
 
 
 
-
-
 <%= form_tag languages_path,  :method => 'get' do %>
 <p>
 	Start Date: <input class="picker" name="first" type="text" /></p></br></br>
@@ -33,7 +31,7 @@
 	  rotation: -45,
           align: 'right',
           formatter: function() {
-           return Highcharts.dateFormat("%b %e, %Y", this.value);
+           return Highcharts.dateFormat("%b %e, %Y", this.value-1);
           }
         }
 	
@@ -45,7 +43,7 @@
       },
    
       tooltip: {
-      
+	  
         formatter: function() {
           return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
                  Highcharts.numberFormat(this.y, 0) + ' letters' + '<br/> Language: ' + this.series.name ;
@@ -57,7 +55,7 @@
       <%- @series.each_key do |key| %>
       {
           name: '<%= key %>',
-          pointInterval: <%= 1.day * 1000 %>,
+          pointInterval: <%= 1.days * 7 * 1000 %>,
           pointStart: <%= (@first + 1.day).to_i * 1000 %>,
           pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
           data: <%= @series[key] %>
