@@ -1,4 +1,5 @@
 class LetterCampaignsController < ApplicationController
+before_filter :ensure_is_signed_in
   # GET /letter_campaigns
   # GET /letter_campaigns.xml
   
