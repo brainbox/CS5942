@@ -10,4 +10,8 @@ class Language < ActiveRecord::Base
     find(:all,:conditions => ["date(created_at) = ? AND lang_name = ?", date, lang]).count
   end
   
+  def user_can_read?(current_user)
+    current_user.id == self.user_id
+  end
+  
 end
