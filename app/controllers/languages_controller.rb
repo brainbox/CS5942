@@ -17,7 +17,7 @@ before_filter :ensure_is_signed_in
       
       if @first == @last
 	# no date range....fLASH ERROR MESSAGE
-	flash[:notice] = "You can not select the same date"
+	
 	
       elsif @first > @last
 	# fisr is after last
