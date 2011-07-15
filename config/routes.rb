@@ -1,5 +1,6 @@
 CS5942::Application.routes.draw do
   
+  match '/signup',  :to => 'users#new'
   
   match '/signin',  :to => 'members#index'
   
