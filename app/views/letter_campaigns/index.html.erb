@@ -1,14 +1,29 @@
 <h1>Graph For Campaigns </h1>
-
   
 <%= form_tag letter_campaigns_path,  :method => 'get' do %>
-<p>
-	Start Date: <input class="picker" name="first" type="text" /></p></br></br>
-	<p>End Date: <input class="picker" name="last" type="text" /></br></br>
-	
-	<%= submit_tag "Load Graph", :name => nil %>
-</p>
+<div id="form-dates">
+	Start Date: <input class="picker" name="first" type="text" /></br>
+	End Date: <input class="picker" name="last" type="text" /></br>
+	Interval: <input type="text" name="interval" value="<%= @interval %>"/>
+</div>
+
+<div id="form-campaign">
+	<%-(0..@max_number_of_tribes).each do |num| %>
+		<select name="campaign<%= num %>">
+			<option value="0">-- none --</option>
+			<%- @campaigns.each do |campaign| %>
+				<option value="<%= campaign %>"><%= campaign %></option>
+			<%- end %>
+		</select>
+	<%- end %>
+</div>
+
+<%= submit_tag "Load Graph", :name => nil %>
 <% end %>
+
+
+
+
 
 <% if @first -%>
 <script type="text/javascript" charset="utf-8">
@@ -54,7 +69,7 @@
       <%- @series.each_key do |key| %>
       {
           name: '<%= key %>',
-          pointInterval: <%= 1.days * 7 * 1000 %>,
+          pointInterval: <%= @interval.days * 1000 %>,
           pointStart: <%= (@first + 1.day).to_i * 1000 %>,
           pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
           data: <%= @series[key] %>
@@ -64,8 +79,8 @@
     });
   });
 </script>
-<% end -%>
 <div id="campaign_chart" style="width:1200px; height: 600px;"></div>
+<% end -%>
 <br />
 <br />
 
