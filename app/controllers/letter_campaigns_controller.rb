@@ -3,10 +3,13 @@ class LetterCampaignsController < ApplicationController
   # GET /letter_campaigns.xml
   
   def index
+    @campaigns = LetterCampaign.get_all_campaign_names
+	@interval = 7
     if params[:first] && params[:last]
       @letter_campaigns = LetterCampaign.all
       @first = Time.parse(params[:first])
       @last = Time.parse(params[:last])
+	  @interval = params[:interval].to_i
       
       if @first == @last
 	# no date range....fLASH ERROR MESSAGE
@@ -17,14 +20,18 @@ class LetterCampaignsController < ApplicationController
 	
       end
       
+	  names = Array.new
+	  (0..4).each do |num|
+		names.push params["campaign#{num}"] unless params["campaign#{num}"].eql?('0')
+	  end
       @series = {}
-      @letter_campaigns.each do |letter_campaign|
+      names.each do |name|
 	    series_data = Array.new
-	    (@first.to_i..@last.to_i).step(1.week).each do |date|
+	    (@first.to_i..@last.to_i).step(@interval.days).each do |date|
 		  date = Time.at(date)
-		  series_data.push letter_campaign.letters.tribe_total_on(letter_campaign.id, date, (date + 1.week))
+		  series_data.push LetterCampaign.get_total_letters_for_campaign_by_dates(:start_date=>date, :end_date=>date+@interval.days, :campaign_name=>name)
 		end
-        @series[letter_campaign.name] = series_data.inspect
+        @series[name] = series_data.inspect
       end
     end
 

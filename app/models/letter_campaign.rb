@@ -10,5 +10,23 @@ def self.total_on(date)
     #where("date(created_at) = ?", date).count
     find(:all,:conditions => ["date(created_at) = ? AND name = ?", date, tribe]).count
   
-end
+	end
+	
+  def self.get_total_letters_for_campaign_by_dates(options)
+    total = 0
+    campaigns = self.where(['name=?', options[:campaign_name]])
+	campaigns.each do |campaign|
+	  result = Letter.where("letter_campaign_id=? and DATE(created_at) between ? and ?", campaign.id, options[:start_date].to_date.strftime('%Y-%m-%d'), options[:end_date].to_date.strftime('%Y-%m-%d')).count  
+	  total += result
+	end
+	return total
+  end
+  
+  def self.get_all_campaign_names
+	campaigns = Array.new
+	self.find(:all).each do |campaign|
+		campaigns.push campaign.name unless campaigns.include?(campaign.name)
+	end
+	return campaigns.sort
+ end
 end
