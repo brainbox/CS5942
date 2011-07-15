@@ -1,4 +1,12 @@
 class LanguagesController < ApplicationController
+before_filter :ensure_is_signed_in
+  
+  def ensure_is_signed_in
+    if current_user.nil?
+      redirect_to(root_url, :notice => 'You must be logged in.')
+	  return false
+    end
+  end
   # GET /languages
   # GET /languages.xml
    def index
