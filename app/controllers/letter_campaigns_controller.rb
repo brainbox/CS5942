@@ -4,6 +4,7 @@ class LetterCampaignsController < ApplicationController
   
   def index
     @campaigns = LetterCampaign.get_all_campaign_names
+	@max_number_of_tribes = 4
 	@interval = 7
     if params[:first] && params[:last]
       @letter_campaigns = LetterCampaign.all
@@ -21,7 +22,7 @@ class LetterCampaignsController < ApplicationController
       end
       
 	  names = Array.new
-	  (0..4).each do |num|
+	  (0..@max_number_of_tribes).each do |num|
 		names.push params["campaign#{num}"] unless params["campaign#{num}"].eql?('0')
 	  end
       @series = {}

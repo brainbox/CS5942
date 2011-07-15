@@ -8,7 +8,7 @@
 </div>
 
 <div id="form-campaign">
-	<%-(0..4).each do |num| %>
+	<%-(0..@max_number_of_tribes).each do |num| %>
 		<select name="campaign<%= num %>">
 			<option value="0">-- none --</option>
 			<%- @campaigns.each do |campaign| %>
