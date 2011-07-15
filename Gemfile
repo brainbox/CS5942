@@ -15,6 +15,8 @@ group :development, :test do
  gem 'rspec-rails', '2.6.1'
  gem 'capybara', '1.0.0'
  gem 'database_cleaner', '0.6.7'
+ gem 'annotate', '2.4.0'
+ gem 'factory_girl_rails', '1.0'
 end
 # Use unicorn as the web server
 # gem 'unicorn'

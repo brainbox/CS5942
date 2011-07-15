@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    annotate (2.4.0)
     arel (2.0.10)
     builder (2.1.2)
     capybara (1.0.0)
@@ -54,6 +55,10 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    factory_girl (1.3.3)
+    factory_girl_rails (1.0)
+      factory_girl (~> 1.3)
+      rails (>= 3.0.0.beta4)
     ffi (1.0.9-x86-mingw32)
     gherkin (2.4.1-x86-mingw32)
       json (>= 1.4.6)
@@ -119,10 +124,12 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  annotate (= 2.4.0)
   capybara (= 1.0.0)
   cucumber (= 0.10.7)
   cucumber-rails (= 0.5.2)
   database_cleaner (= 0.6.7)
+  factory_girl_rails (= 1.0)
   rails (= 3.0.7)
   rake (= 0.8.7)
   rspec (= 2.6.0)

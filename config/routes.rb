@@ -1,4 +1,11 @@
 CS5942::Application.routes.draw do
+  
+  match '/signup',  :to => 'users#new'
+  
+  match '/signin',  :to => 'members#index'
+  
+  match '/signout', :to => 'sessions#destroy'
+
   resources :supporters
 
   resources :languages
@@ -8,10 +15,16 @@ CS5942::Application.routes.draw do
   resources :letters
 
   resources :orders
+  
+  resources :users
+  
+  resources :members
+  
+  resources :sessions, :only => [:new, :create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-	root :to => 'members#index'
+	root :to => 'sessions#new'
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
@@ -64,5 +77,5 @@ CS5942::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+   #match ':controller(/:action(/:id(.:format)))'
 end
