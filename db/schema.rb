@@ -10,44 +10,63 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712134124) do
+ActiveRecord::Schema.define(:version => 20110714152834) do
 
   create_table "languages", :force => true do |t|
-    t.string   "lang_code"
-    t.string   "lang_name"
-    t.string   "short_code"
-    t.string   "i18n_identifier"
-    t.integer  "custom_css"
-    t.integer  "active"
-    t.integer  "in_menus"
-    t.integer  "default_domain_id"
-    t.string   "root_slug"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "lang_code"
+    t.string    "lang_name"
+    t.string    "short_code"
+    t.string    "i18n_identifier"
+    t.integer   "custom_css"
+    t.integer   "active"
+    t.integer   "in_menus"
+    t.integer   "default_domain_id"
+    t.string    "root_slug"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "letter_campaigns", :force => true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.integer  "language_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "name"
+    t.string    "slug"
+    t.integer   "language_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "letters", :force => true do |t|
-    t.integer  "letter_campaign_id"
-    t.integer  "language_id"
-    t.integer  "supporter_id"
-    t.string   "country_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "letter_campaign_id"
+    t.integer   "language_id"
+    t.integer   "supporter_id"
+    t.string    "country_code"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+  end
+
+  create_table "orders", :force => true do |t|
+    t.string    "item"
+    t.string    "description"
+    t.float     "amount"
+    t.integer   "quantity"
+    t.date      "date"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "supporters", :force => true do |t|
-    t.integer  "language_id"
-    t.string   "country_code"
+    t.integer   "language_id"
+    t.string    "country_code"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "encrypted_password"
+    t.string   "salt"
   end
 
 end
