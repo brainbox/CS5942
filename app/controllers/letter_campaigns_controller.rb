@@ -7,6 +7,7 @@ before_filter :ensure_is_signed_in
     @campaigns = LetterCampaign.get_all_campaign_names
 	@max_number_of_tribes = 4
 	@interval = 7
+	@params = params
     if params[:first] && params[:last]
       @letter_campaigns = LetterCampaign.all
       @first = Time.parse(params[:first])
@@ -14,12 +15,11 @@ before_filter :ensure_is_signed_in
 	  @interval = params[:interval].to_i
       
       if @first == @last
-	# no date range....fLASH ERROR MESSAGE
-	flash[:notice] = "You can not select the same date"
-	
+		# no date range....fLASH ERROR MESSAGE
+		flash[:notice] = "You can not select the same date"
       elsif @first > @last
-	# fisr is after last
-	
+		# fisr is after last	
+		flash[:notice] = "end date must be after start date"
       end
       
 	  names = Array.new
