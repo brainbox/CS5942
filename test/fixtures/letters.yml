@@ -1,0 +1,15 @@
+
+test: 
+  language_id: 1
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  letter_campaign_id: 1
+  
+test2:
+  language_id: 3
+  created_at: <%= (Date.today + 1.day).to_date.strftime('%Y-%m-%d') %>
+  letter_campaign_id: 1
+  
+test3:
+  language_id: 2
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  letter_campaign_id: 2

@@ -19,7 +19,7 @@ before_filter :ensure_is_signed_in
 		flash[:notice] = "You can not select the same date"
       elsif @first > @last
 		# fisr is after last	
-		flash[:notice] = "end date must be after start date"
+		flash[:notice] = "End date must be after start date"
       end
       
 	  names = Array.new

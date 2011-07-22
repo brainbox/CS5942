@@ -1,0 +1,16 @@
+
+test: 
+  name: Test Tribe
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test2:
+  name: Another Tribe
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test3:
+  name: Test Tribe
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test4:
+  name: Test Tribe
+  created_at: <%= (Date.today - 2.day).to_date.strftime('%Y-%m-%d') %>
