@@ -21,4 +21,5 @@ class LetterTest < ActiveSupport::TestCase
 
 	end
 	
+	
 end

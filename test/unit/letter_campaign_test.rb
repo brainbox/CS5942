@@ -20,6 +20,10 @@ class LetterCampaignTest < ActiveSupport::TestCase
 		assert_equal expected,data
 	end
 	
-	
+	test "Total letter of campagins by date" do
+		expected = 0
+		data = LetterCampaign.get_total_letters_for_campaign_by_dates( :start_date=> (Date.today - 1.day), :end_date=> (Date.today), :campaign_name=> 'Test Tribe')
+		assert_equal expected,data
+	end
 	
 end

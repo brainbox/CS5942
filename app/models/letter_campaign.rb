@@ -11,8 +11,9 @@ def self.total_on(date)
     find(:all,:conditions => ["date(created_at) = ? AND name = ?", date, tribe]).count
   
 	end
-	
+
   def self.get_total_letters_for_campaign_by_dates(options)
+  # options[:end_date] = ((options[:end_date]).to_date + 1.day).to_date.strftime('%Y-%m-%d')
     options[:end_date] += 1.day # Had to include the one day to accomodate dates like 2011-06-05 01:02:03
     total = 0
     campaigns = self.where(['name=?', options[:campaign_name]])
