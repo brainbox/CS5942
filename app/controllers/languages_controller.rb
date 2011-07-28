@@ -4,24 +4,28 @@ before_filter :ensure_is_signed_in
   # GET /languages
   # GET /languages.xml
    def index
-    if params[:first] && params[:last]
+    @first = params[:first].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:first].nil?
+	@first = @first.string unless @first.nil?
+	@last = params[:last].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:last].nil?
+	@last = @last.string unless @last.nil?
+    if @first && @last
       @languages = Language.all
-      @first = Time.parse(params[:first])
-      @last = Time.parse(params[:last])
+      @first_time = Time.parse(@first)
+      @last_time = Time.parse(@last)
       
-      if @first == @last
-	# no date range....fLASH ERROR MESSAGE
-	
-	
-      elsif @first > @last
-	# fisr is after last
-	
+   if @first_time == @last_time
+		# no date range....fLASH ERROR MESSAGE
+		flash.now[:notice] = "You can not select the same date"
+      elsif @first_time > @last_time
+		# fisr is after last	
+		flash.now[:notice] = "End date must be after start date"
       end
+      
       
       @series = {}
       @languages.each do |language|
 	    series_data = Array.new
-	    (@first.to_i..@last.to_i).step(1.week).each do |date|
+	    (@first_time.to_i..@last_time.to_i).step(1.week).each do |date|
 		  date = Time.at(date)
 		  series_data.push language.letters.lang_total_on(language.id, date, (date + 1.week))
 		end

@@ -1,13 +1,16 @@
-<h1>Graph For Campaigns </h1>
+<div class="innerContainer"></br>
+<h1 style="text-align:center;">Graph on Different Campaigns </h1>
+
   
 <%= form_tag letter_campaigns_path,  :method => 'get' do %>
 <div id="form-dates">
-	Start Date: <input class="picker" name="first" type="text" /></br>
-	End Date: <input class="picker" name="last" type="text"  /></br>
-	Interval: <input type="text" name="interval" value="<%= @interval %>"/>
+	Start Date: <input class="picker" name="first" type="text"  value="<%= @first %>" /></br></br>
+	End Date: <input class="picker" name="last" type="text" value="<%= @last %>"  /></br></br>
+	Interval: <input type="text" name="interval" value="<%= @interval %>"/></br></br>
 </div>
 
 <div id="form-campaign">
+<p style="text-align:center; font-size:16px;"><strong>Tribe Selection</strong></p></br>
 	<%-(0..@max_number_of_tribes).each do |num| %>
 		<select name="campaign<%= num %>">
 			<option value="0">-- none --</option>
@@ -16,7 +19,8 @@
 			<%- end %>
 		</select>
 	<%- end %>
-</div>
+</div></br></br>
+	
 
 <%= submit_tag "Load Graph", :name => nil %>
 <% end %>
@@ -25,7 +29,7 @@
 
 
 
-<% if @first -%>
+<% if @series -%>
 <script type="text/javascript" charset="utf-8">
   $(function() {
     new Highcharts.Chart({
@@ -35,8 +39,11 @@
 	zoomType: 'x',
         spacingRight: 20
       },
-      title: {
-        text: "Letters per Week"
+        title: {
+        text: "Letters for Different Campagins"
+      },
+	  subtitle: {
+         text: "Letters per Week"
       },
       xAxis: {  
         type: "datetime",
@@ -57,12 +64,12 @@
       },
    
       tooltip: {
-	  
-        formatter: function() {
+	   
+	    formatter: function() {
           return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' + 
                  Highcharts.numberFormat(this.y, 0) + ' letters' + '<br/> Campaigns: ' + this.series.name ;
-        }
-	
+        },
+		
       },
       
      series: [
@@ -70,8 +77,8 @@
       {
           name: '<%= key %>',
           pointInterval: <%= @interval.days * 1000 %>,
-          pointStart: <%= (@first + 1.day).to_i * 1000 %>,
-          pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
+          pointStart: <%= (@first_time + 1.day).to_i * 1000 %>,
+          pointEnd: <%= (@last_time + 1.day).to_i * 1000  %>,
           data: <%= @series[key] %>
          },
        <%- end %>
@@ -79,7 +86,8 @@
     });
   });
 </script>
-<div id="campaign_chart" style="width:1200px; height: 600px;"></div>
+
+<div id="campaign_chart" style="width:1000px; height: 600px;"></div>
 <% end -%>
 <br />
 <br />
@@ -93,5 +101,7 @@
 
 
 
-<%= link_to 'New Letter campaign', new_letter_campaign_path %>
-<%= link_to 'Home Page', members_path %>
+
+<%= link_to 'Home Page', members_path %> |
+<%= link_to "Sign out", signout_path %></p>
+</div>

@@ -40,3 +40,6 @@ end
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+
+gem 'simplecov', '>=0.3.8', :require=>false, :group=>:test

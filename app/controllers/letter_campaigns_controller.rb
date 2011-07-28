@@ -8,18 +8,22 @@ before_filter :ensure_is_signed_in
 	@max_number_of_tribes = 4
 	@interval = 7
 	@params = params
-    if params[:first] && params[:last]
+	@first = params[:first].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:first].nil?
+	@first = @first.string unless @first.nil?
+	@last = params[:last].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:last].nil?
+	@last = @last.string unless @last.nil?
+    if @first && @last
       @letter_campaigns = LetterCampaign.all
-      @first = Time.parse(params[:first])
-      @last = Time.parse(params[:last])
+      @first_time = Time.parse(@first)
+      @last_time = Time.parse(@last)
 	  @interval = params[:interval].to_i
       
       if @first == @last
 		# no date range....fLASH ERROR MESSAGE
-		flash[:notice] = "You can not select the same date"
+		flash.now[:notice] = "You can not select the same date"
       elsif @first > @last
 		# fisr is after last	
-		flash[:notice] = "End date must be after start date"
+		flash.now[:notice] = "End date must be after start date"
       end
       
 	  names = Array.new
@@ -29,7 +33,7 @@ before_filter :ensure_is_signed_in
       @series = {}
       names.each do |name|
 	    series_data = Array.new
-	    (@first.to_i..@last.to_i).step(@interval.days).each do |date|
+	    (@first_time.to_i..@last_time.to_i).step(@interval.days).each do |date|
 		  date = Time.at(date)
 		  series_data.push LetterCampaign.get_total_letters_for_campaign_by_dates(:start_date=>date, :end_date=>date+@interval.days, :campaign_name=>name)
 		end

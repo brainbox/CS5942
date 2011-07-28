@@ -1,17 +1,18 @@
-<h1>Graph For Letters </h1>
+<div class="innerContainer"></br>
+<h1 style="text-align:center;">Graph on Different Languages</h1></br></br>
 
 
 
 <%= form_tag languages_path,  :method => 'get' do %>
 <p>
-	Start Date: <input class="picker" name="first" type="text" /></p></br></br>
-	<p>End Date: <input class="picker" name="last" type="text" /></br></br>
+	Start Date: <input class="picker" name="first" type="text" value="<%= @first %>"/></p></br></br>
+	<p>End Date: <input class="picker" name="last" type="text" value="<%= @last %>"/></br></br>
 	
 	<%= submit_tag "Load Graph", :name => nil %>
 </p>
 <% end %>
 
-<% if @first -%>
+<% if @series -%>
 <script type="text/javascript" charset="utf-8">
   $(function() {
     new Highcharts.Chart({
@@ -22,9 +23,12 @@
         spacingRight: 20
       },
       title: {
-        text: "Letters per Week"
+        text: "Letters in Different Languages"
       },
-      xAxis: {  
+	  subtitle: {
+         text: "Letters per Week"
+      },
+	  xAxis: {  
         type: "datetime",
 	 maxZoom: 14 * 24 * 3600000, // fourteen days
         labels: {
@@ -56,8 +60,8 @@
       {
           name: '<%= key %>',
           pointInterval: <%= 1.days * 7 * 1000 %>,
-          pointStart: <%= (@first + 1.day).to_i * 1000 %>,
-          pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
+          pointStart: <%= (@first_time + 1.day).to_i * 1000 %>,
+          pointEnd: <%= (@last_time + 1.day).to_i * 1000  %>,
           data: <%= @series[key] %>
          },
        <%- end %>
@@ -65,7 +69,7 @@
     });
   });
 </script>
-<div id="language_chart" style="width:1200px; height: 600px;"></div>
+<div id="language_chart" style="width:1000px; height: 600px;"></div>
 <% end -%>
 
 <br />
@@ -73,6 +77,7 @@
 
 
 
-<%= link_to 'New Language', new_language_path %>
 
-<%= link_to 'Home Page', members_path %>
+<%= link_to 'Home Page', members_path %> |
+<%= link_to "Sign out", signout_path %></p>
+</div>

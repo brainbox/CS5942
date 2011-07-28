@@ -1,0 +1,17 @@
+
+
+test: 
+  lang_name: English
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test2:
+  lang_name: French
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test3:
+  lang_name: English
+  created_at: <%= (Date.today - 1.day).to_date.strftime('%Y-%m-%d') %>
+  
+test4:
+  lang_name: English
+  created_at: <%= (Date.today - 2.day).to_date.strftime('%Y-%m-%d') %>
