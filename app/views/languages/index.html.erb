@@ -6,8 +6,8 @@
 <%= form_tag languages_path,  :method => 'get' do %>
 <p>
 	Start Date: <input class="picker" name="first" type="text" value="<%= @first.strftime('%Y-%m-%d') unless @first.nil? %>" /></p></br></br>
-	<p>End Date: <input class="picker" name="last" type="text" value="<%= @last.strftime('%Y-%m-%d') unless @last.nil? %>"/></br></br>
-	Interval: <input type="text" name="interval" value="<%= @interval %>"/></br></br>
+	<p>End Date: &nbsp;  <input class="picker" name="last" type="text" value="<%= @last.strftime('%Y-%m-%d') unless @last.nil? %>"/></p></br></br>
+	<p>Interval: &nbsp; &nbsp; <input type="text" name="interval" value="<%= @interval %>"/></p></br></br>
 	<%= submit_tag "Load Graph", :name => nil %>
 </p>
 <% end %>

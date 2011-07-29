@@ -3,11 +3,11 @@
 
   
 <%= form_tag letter_campaigns_path,  :method => 'get' do %>
-<div id="form-dates">
+<p>
 	Start Date: <input class="picker" name="first" type="text"  value="<%= @first.strftime('%Y-%m-%d') unless @first.nil? %>" /></br></br>
-	End Date: <input class="picker" name="last" type="text" value="<%= @last.strftime('%Y-%m-%d') unless @last.nil? %>"  /></br></br>
-	Interval: <input type="text" name="interval" value="<%= @interval %>"/></br></br>
-</div>
+	End Date: &nbsp; <input class="picker" name="last" type="text" value="<%= @last.strftime('%Y-%m-%d') unless @last.nil? %>"  /></br></br>
+	Interval:&nbsp; &nbsp;  <input type="text" name="interval" value="<%= @interval %>"/></br></br>
+</p>
 
 <div id="form-campaign">
 <p style="text-align:center; font-size:16px;"><strong>Tribe Selection</strong></p></br>
