@@ -3,7 +3,7 @@ margin:0;
 padding:0;
 }
 Body{
-	font-family:Verdana;
+	font-family:Arial,Helvetica,Geneva,sans-serif;
 	font-size:12px;
 	background-color:#333333;
 	color:#ffffff;
@@ -24,9 +24,8 @@ div.innerContainer{
 	width:1100px;
 	margin-left:180px;
 	color:#ffffff;
-	font-family:Verdana;
 	font-size:16px;
-
+	font-family:Arial,Helvetica,Geneva,sans-serif;
 	
 	}
 div.header {
