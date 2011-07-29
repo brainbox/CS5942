@@ -7,31 +7,6 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
-module ActionController
-module Flash
-class FlashNow
-def initialize
-@flash = {}
-@now_cache = {}
-@flash[@now_cache] = {}
-end
-
-def []=(k, v)
-@now_cache = k
-@flash[@now_cache]= v
-v
-end
-end
-
-class FlashHash
-def now_cache
-self || {}
-end
-end
-end
-end
-
-
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #

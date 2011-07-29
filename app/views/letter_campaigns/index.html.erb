@@ -4,8 +4,8 @@
   
 <%= form_tag letter_campaigns_path,  :method => 'get' do %>
 <div id="form-dates">
-	Start Date: <input class="picker" name="first" type="text"  value="<%= @first %>" /></br></br>
-	End Date: <input class="picker" name="last" type="text" value="<%= @last %>"  /></br></br>
+	Start Date: <input class="picker" name="first" type="text"  value="<%= @first.strftime('%Y-%m-%d') unless @first.nil? %>" /></br></br>
+	End Date: <input class="picker" name="last" type="text" value="<%= @last.strftime('%Y-%m-%d') unless @last.nil? %>"  /></br></br>
 	Interval: <input type="text" name="interval" value="<%= @interval %>"/></br></br>
 </div>
 
@@ -77,8 +77,8 @@
       {
           name: '<%= key %>',
           pointInterval: <%= @interval.days * 1000 %>,
-          pointStart: <%= (@first_time + 1.day).to_i * 1000 %>,
-          pointEnd: <%= (@last_time + 1.day).to_i * 1000  %>,
+          pointStart: <%= (@first + 1.day).to_i * 1000 %>,
+          pointEnd: <%= (@last + 1.day).to_i * 1000  %>,
           data: <%= @series[key] %>
          },
        <%- end %>

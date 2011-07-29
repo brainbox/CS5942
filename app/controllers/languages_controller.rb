@@ -4,30 +4,53 @@ before_filter :ensure_is_signed_in
   # GET /languages
   # GET /languages.xml
    def index
-    @first = params[:first].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:first].nil?
-	@first = @first.string unless @first.nil?
-	@last = params[:last].match(/\d{4}-[01]\d-[0-3]\d/) unless params[:last].nil?
-	@last = @last.string unless @last.nil?
-    if @first && @last
-      @languages = Language.all
-      @first_time = Time.parse(@first)
-      @last_time = Time.parse(@last)
-      
-   if @first_time == @last_time
-		# no date range....fLASH ERROR MESSAGE
-		flash.now[:notice] = "You can not select the same date"
-      elsif @first_time > @last_time
-		# fisr is after last	
-		flash.now[:notice] = "End date must be after start date"
+      @first = params[:first]
+	  @last = params[:last]
+	  @params = params
+	  @interval = params[:interval].nil? ? 7 : params[:interval].to_i
+	  
+	  # Check provided parameters exist
+    if @interval <= 0
+      flash.now[:notice] = "You must specify a positive interval"
+    end
+	  
+      # If dates exist, extract the date string and check it's sensible before creating as Date object
+    if @first
+	  @first = @first.match(/\d{4}-[01]\d-[0-3]\d/)
+	  if @first.nil?
+	    flash.now[:notice] = "Invalid start date."
+	  else
+        @first = Time.parse(@first.string)
+	  end
+	end
+	if @last
+	  @last = @last.match(/\d{4}-[01]\d-[0-3]\d/)
+	  if @last.nil?
+	    flash.now[:notice] = "Invalid end date."
+	  else
+        @last = Time.parse(@last.string)
+	  end
+	end
+
+	# Check passed dates are sensible
+	if @first && @last && flash.empty?
+      if @first == @last
+        flash.now[:notice] = "You can not select the same date"
+      elsif @first > @last
+	    flash.now[:notice] = "End date must be after start date"
       end
-      
+	end
+	  
+	# If no errors with parameters
+	if @first && flash.empty?
+      @languages = Language.all
       
       @series = {}
       @languages.each do |language|
 	    series_data = Array.new
-	    (@first_time.to_i..@last_time.to_i).step(1.week).each do |date|
+	    (@first.to_i..@last.to_i).step(@interval.days).each do |date|
 		  date = Time.at(date)
-		  series_data.push language.letters.lang_total_on(language.id, date, (date + 1.week))
+		  series_data.push language.letters.lang_total_on(language.id, date, (date+@interval.days))
 		end
         @series[language.lang_name] = series_data.inspect
       end
@@ -39,75 +62,4 @@ before_filter :ensure_is_signed_in
     end
   end
 
-
-  # GET /languages/1
-  # GET /languages/1.xml
-  def show
-    @language = Language.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @language }
-    end
-  end
-
-  # GET /languages/new
-  # GET /languages/new.xml
-  def new
-    @language = Language.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @language }
-    end
-  end
-
-  # GET /languages/1/edit
-  def edit
-    @language = Language.find(params[:id])
-  end
-
-  # POST /languages
-  # POST /languages.xml
-  def create
-    @language = Language.new(params[:language])
-
-    respond_to do |format|
-      if @language.save
-        format.html { redirect_to(@language, :notice => 'Language was successfully created.') }
-        format.xml  { render :xml => @language, :status => :created, :location => @language }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @language.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /languages/1
-  # PUT /languages/1.xml
-  def update
-    @language = Language.find(params[:id])
-
-    respond_to do |format|
-      if @language.update_attributes(params[:language])
-        format.html { redirect_to(@language, :notice => 'Language was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @language.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /languages/1
-  # DELETE /languages/1.xml
-  def destroy
-    @language = Language.find(params[:id])
-    @language.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(languages_url) }
-      format.xml  { head :ok }
-    end
-  end
 end
