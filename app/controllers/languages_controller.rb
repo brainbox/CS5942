@@ -14,7 +14,7 @@ before_filter :ensure_is_signed_in
       flash.now[:notice] = "You must specify a positive interval"
     end
 	  
-      # If dates exist, extract the date string and check it's sensible before creating as Date object
+      # If dates exist, extract the date string and check it's sensible before creating as Date object today
     if @first
 	  @first = @first.match(/\d{4}-[01]\d-[0-3]\d/)
 	  if @first.nil?
